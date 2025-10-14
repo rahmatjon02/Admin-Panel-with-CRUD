@@ -1,0 +1,10 @@
+{
+  "data": [
+    {
+      "id": "number",
+      "name": "string",
+      "price": "number",
+      "inStock": "boolean"
+    }
+  ]
+}
