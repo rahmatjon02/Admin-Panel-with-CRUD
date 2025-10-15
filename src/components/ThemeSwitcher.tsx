@@ -1,16 +1,13 @@
 import { Button } from "@mui/material";
 import { useThemeStore } from "../hooks/useThemeStore";
-
+import { Moon, Sun } from "lucide-react";
 export const ThemeSwitcher = () => {
-  const { theme, toggleMode } = useThemeStore();
+  const { theme, toggleTheme } = useThemeStore();
 
   return (
-    <Button
-      variant="contained"
-      onClick={toggleMode}
-      color="primary"
-    >
-      {theme === "light" ? "Dark" : "Light"}
+    <Button className="!text-white"  onClick={toggleTheme}>
+      {theme === `light` ? <Sun /> : <Moon />}
+      {theme === `light` ? "Dark" : "light"}
     </Button>
   );
 };

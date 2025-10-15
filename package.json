@@ -20,6 +20,7 @@
     "@tanstack/react-query-devtools": "^5.90.2",
     "axios": "^1.12.2",
     "json-server": "^1.0.0-beta.3",
+    "lucide-react": "^0.545.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-hook-form": "^7.65.0",
