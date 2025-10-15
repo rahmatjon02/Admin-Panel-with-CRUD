@@ -1,7 +1,16 @@
-import "./App.css";
+import { Routes, Route } from "react-router-dom";
 
-function App() {
-  return <div>Hello</div>;
-}
+import { UsersPage } from "./pages/usersPage";
+import Layout from "./pages/layout";
+import { ProductsPage } from "./pages/productsPage";
 
-export default App;
+export const App = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<ProductsPage />} />
+        <Route path="/users" element={<UsersPage />} />
+      </Route>
+    </Routes>
+  );
+};

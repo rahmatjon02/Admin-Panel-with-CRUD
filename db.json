@@ -1,10 +1,144 @@
 {
-  "data": [
+  "users": [
     {
-      "id": "number",
-      "name": "string",
-      "price": "number",
-      "inStock": "boolean"
+      "id": "1",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "role": "manager"
+    },
+    {
+      "id": "2",
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "role": "manager"
+    },
+    {
+      "id": "3",
+      "name": "Mike Johnson",
+      "email": "mike@example.com",
+      "role": "user"
+    },
+    {
+      "id": "4",
+      "name": "Sarah Wilson",
+      "email": "sarah@example.com",
+      "role": "manager"
+    },
+    {
+      "id": "5",
+      "name": "David Brown",
+      "email": "david@example.com",
+      "role": "admin"
+    },
+    {
+      "id": "6",
+      "name": "Emily Davis",
+      "email": "emily@example.com",
+      "role": "user"
+    },
+    {
+      "id": "7",
+      "name": "Chris Miller",
+      "email": "chris@example.com",
+      "role": "user"
+    },
+    {
+      "id": "8",
+      "name": "Lisa Taylor",
+      "email": "lisa@example.com",
+      "role": "manager"
+    },
+    {
+      "id": "9",
+      "name": "Alex Anderson",
+      "email": "alex@example.com",
+      "role": "admin"
+    },
+    {
+      "id": "10",
+      "name": "Maria Garcia",
+      "email": "maria@example.com",
+      "role": "user"
+    },
+    {
+      "id": "c6e6",
+      "name": "dscsd",
+      "email": "dcd",
+      "role": "admin"
+    },
+    {
+      "id": "e616",
+      "name": "dscsd",
+      "email": "dcdasdxc",
+      "role": "user"
+    },
+    {
+      "id": "5766",
+      "name": "John Doe12",
+      "email": "john@example.com",
+      "role": "user"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "name": "Laptop",
+      "price": 999.99,
+      "inStock": true
+    },
+    {
+      "id": "2",
+      "name": "Mouse",
+      "price": 29.99,
+      "inStock": false
+    },
+    {
+      "id": "3",
+      "name": "Keyboard",
+      "price": 79.99,
+      "inStock": true
+    },
+    {
+      "id": "4",
+      "name": "Monitor",
+      "price": 299.99,
+      "inStock": true
+    },
+    {
+      "id": "5",
+      "name": "Headphones",
+      "price": 149.99,
+      "inStock": false
+    },
+    {
+      "id": "6",
+      "name": "Webcam",
+      "price": 89.99,
+      "inStock": true
+    },
+    {
+      "id": "7",
+      "name": "Tablet",
+      "price": 449.99,
+      "inStock": false
+    },
+    {
+      "id": "8",
+      "name": "Smartphone",
+      "price": 799.99,
+      "inStock": false
+    },
+    {
+      "id": "9",
+      "name": "Printer",
+      "price": 199.99,
+      "inStock": true
+    },
+    {
+      "id": "10",
+      "name": "External Hard Drive",
+      "price": 129.99,
+      "inStock": true
     }
   ]
 }
