@@ -15,7 +15,7 @@
     {
       "id": "3",
       "name": "Mike Johnson",
-      "email": "mike@example.com",
+      "email": "mike@gmail.com",
       "role": "user"
     },
     {
@@ -58,24 +58,6 @@
       "id": "10",
       "name": "Maria Garcia",
       "email": "maria@example.com",
-      "role": "user"
-    },
-    {
-      "id": "c6e6",
-      "name": "dscsd",
-      "email": "dcd",
-      "role": "admin"
-    },
-    {
-      "id": "e616",
-      "name": "dscsd",
-      "email": "dcdasdxc",
-      "role": "user"
-    },
-    {
-      "id": "5766",
-      "name": "John Doe12",
-      "email": "john@example.com",
       "role": "user"
     }
   ],

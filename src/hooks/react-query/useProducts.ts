@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import type { Product } from "../types/product";
+import type { Product } from "../../types/product";
 
 const API = "http://localhost:3000/products";
 

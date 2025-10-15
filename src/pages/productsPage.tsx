@@ -29,7 +29,7 @@ import {
   useUpdateProduct,
 } from "../hooks/react-query/useProducts";
 import { useThemeStore } from "../hooks/zustand/useThemeStore";
-import { useProductsFilterStore } from "../hooks/zustand/useFiltersStore"; 
+import { useProductsFilterStore } from "../hooks/zustand/useFiltersStore";
 
 type FormValues = {
   name: string;
@@ -118,7 +118,7 @@ export const ProductsPage = () => {
             onChange={(e) => setSearch(e.target.value)}
             className="w-[70%]"
           />
-          <FormControl sx={{ m: 1, minWidth: 120 }}>
+          <FormControl className="!m-1 !min-w-[120px]">
             <Select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
