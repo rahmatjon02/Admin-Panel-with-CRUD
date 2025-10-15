@@ -23,9 +23,10 @@ import {
   useAddUser,
   useDeleteUser,
   useUpdateUser,
-} from "../hooks/useUsers";
+} from "../hooks/react-query/useUsers";
 import type { User } from "../types/user";
-import { useThemeStore } from "../hooks/useThemeStore";
+import { useThemeStore } from "../hooks/zustand/useThemeStore";
+import { useUsersFilterStore } from "../hooks/zustand/useFiltersStore";
 
 type FormValues = Omit<User, "id">;
 
@@ -34,11 +35,10 @@ export const UsersPage = () => {
   const addUser = useAddUser();
   const updateUser = useUpdateUser();
   const deleteUser = useDeleteUser();
-
   const { theme } = useThemeStore();
 
-  const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("all");
+  const { search, setSearch, status, setStatus } = useUsersFilterStore();
+
   const [open, setOpen] = useState(false);
   const [editId, setEditId] = useState<number | null>(null);
 

@@ -1,6 +1,6 @@
 import { Button, CssBaseline, ThemeProvider } from "@mui/material";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { useThemeStore } from "../hooks/useThemeStore";
+import { useThemeStore } from "../hooks/zustand/useThemeStore";
 import { lightTheme, darkTheme } from "../theme";
 import { ThemeSwitcher } from "../components/ThemeSwitcher";
 import { useEffect } from "react";

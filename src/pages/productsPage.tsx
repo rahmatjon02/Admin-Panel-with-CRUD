@@ -27,8 +27,9 @@ import {
   useAddProduct,
   useDeleteProduct,
   useUpdateProduct,
-} from "../hooks/useProducts";
-import { useThemeStore } from "../hooks/useThemeStore";
+} from "../hooks/react-query/useProducts";
+import { useThemeStore } from "../hooks/zustand/useThemeStore";
+import { useProductsFilterStore } from "../hooks/zustand/useFiltersStore"; 
 
 type FormValues = {
   name: string;
@@ -41,11 +42,10 @@ export const ProductsPage = () => {
   const addProduct = useAddProduct();
   const deleteProduct = useDeleteProduct();
   const updateProduct = useUpdateProduct();
+  const { theme } = useThemeStore();
 
-  const {theme} = useThemeStore()
+  const { search, status, setSearch, setStatus } = useProductsFilterStore();
 
-  const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("all");
   const [open, setOpen] = useState(false);
   const [editId, setEditId] = useState<number | null>(null);
 
@@ -141,7 +141,9 @@ export const ProductsPage = () => {
 
       <TableContainer component={Paper}>
         <Table>
-          <TableHead className={`${theme === "light" ? "bg-[#f5f5f5]" : "bg-[#151515]"} `}>
+          <TableHead
+            className={`${theme === "light" ? "bg-[#f5f5f5]" : "bg-[#151515]"}`}
+          >
             <TableRow>
               <TableCell>
                 <b>ID</b>
