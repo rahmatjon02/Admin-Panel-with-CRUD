@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Button,
   Table,
@@ -10,85 +9,144 @@ import {
   Paper,
   Box,
   Skeleton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
+import { memo, useState } from "react";
+import { Edit, Trash } from "lucide-react";
+import { useThemeStore } from "../hooks/zustand/useThemeStore";
 import type { Product } from "../types/product";
 
-import { useThemeStore } from "../hooks/zustand/useThemeStore";
-import { Edit, Trash } from "lucide-react";
+interface ProductTableProps {
+  filteredData: Product[];
+  onEdit: (product: Product) => void;
+  onDelete: (id: number) => void;
+  isLoading: boolean;
+}
 
-const ProductTable = ({ filteredData, onEdit, onDelete, isLoading }: any) => {
+const ProductTable = ({
+  filteredData,
+  onEdit,
+  onDelete,
+  isLoading,
+}: ProductTableProps) => {
   const { theme } = useThemeStore();
-  console.log("table product");
+
+  const [openDialog, setOpenDialog] = useState(false);
+  const [Id, setId] = useState<number | null>(null);
+
+  const handleOpenDialog = (id: number) => {
+    setId(id);
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setId(null);
+  };
+
+  const handleDelete = async () => {
+    if (Id) {
+      onDelete(Id);
+      handleCloseDialog();
+    }
+  };
 
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead
-          className={`${theme === "light" ? "bg-[#f5f5f5]" : "bg-[#151515]"}`}
-        >
-          <TableRow>
-            <TableCell>
-              <b>ID</b>
-            </TableCell>
-            <TableCell>
-              <b>Name</b>
-            </TableCell>
-            <TableCell>
-              <b>Price</b>
-            </TableCell>
-            <TableCell align="center">
-              <b>In Stock</b>
-            </TableCell>
-            <TableCell align="center">
-              <b>Actions</b>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {filteredData?.map((p: Product) => (
-            <TableRow key={p.id} hover>
-              <TableCell>{p.id}</TableCell>
-              <TableCell>{p.name}</TableCell>
-              <TableCell>${p.price}</TableCell>
-              <TableCell align="center">
-                {p.inStock ? (
-                  <span className="text-green-600 font-medium">Yes</span>
-                ) : (
-                  <span className="text-red-600 font-medium">No</span>
-                )}
+    <>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead
+            className={`${
+              theme === "light" ? "bg-[#f5f5f5]" : "bg-[#151515]"
+            } transition-colors`}
+          >
+            <TableRow>
+              <TableCell>
+                <b>ID</b>
+              </TableCell>
+              <TableCell>
+                <b>Name</b>
+              </TableCell>
+              <TableCell>
+                <b>Price</b>
               </TableCell>
               <TableCell align="center">
-                <Button size="small" onClick={() => onEdit(p)}>
-                  <Edit />
-                </Button>
-                <Button
-                  size="small"
-                  color="error"
-                  onClick={() => onDelete(p.id)}
-                >
-                  <Trash />
-                </Button>
+                <b>In Stock</b>
+              </TableCell>
+              <TableCell align="center">
+                <b>Actions</b>
               </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHead>
 
-      {isLoading && (
-        <Box className="!w-full">
-          {[...Array(3)].map((_, i) => (
-            <Box key={i}>
-              <br />
-              <Skeleton />
-              <Skeleton animation="wave" />
-              <Skeleton animation={false} />
-            </Box>
-          ))}
-        </Box>
-      )}
-    </TableContainer>
+          <TableBody>
+            {filteredData.map((p) => (
+              <TableRow key={p.id} hover>
+                <TableCell>{p.id}</TableCell>
+                <TableCell>{p.name}</TableCell>
+                <TableCell>${p.price}</TableCell>
+                <TableCell align="center">
+                  {p.inStock ? (
+                    <span className="text-green-600 font-medium">Yes</span>
+                  ) : (
+                    <span className="text-red-600 font-medium">No</span>
+                  )}
+                </TableCell>
+                <TableCell align="center">
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() => onEdit(p)}
+                  >
+                    <Edit size={18} />
+                  </Button>
+                  <Button
+                    size="small"
+                    color="error"
+                    onClick={() => handleOpenDialog(p.id)}
+                  >
+                    <Trash size={18} />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+
+            {isLoading && (
+              <TableRow>
+                <TableCell colSpan={5}>
+                  <Box className="w-full p-4">
+                    {[...Array(3)].map((_, i) => (
+                      <Box key={i} mb={2}>
+                        <Skeleton height={30} />
+                        <Skeleton animation="wave" height={30} />
+                        <Skeleton animation={false} height={30} />
+                      </Box>
+                    ))}
+                  </Box>
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      <Dialog open={openDialog} onClose={handleCloseDialog}>
+        <DialogTitle>Delete Confirmation</DialogTitle>
+        <DialogContent>
+          Are you sure you want to delete this product?
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Cancel</Button>
+          <Button color="error" onClick={handleDelete}>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 
-export default React.memo(ProductTable);
+export default memo(ProductTable);

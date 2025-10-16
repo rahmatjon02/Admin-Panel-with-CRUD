@@ -29,7 +29,6 @@ const UsersPage = () => {
   const addUser = useAddUser();
   const updateUser = useUpdateUser();
   const deleteUser = useDeleteUser();
-
   const { search, setSearch, status, setStatus } = useUsersFilterStore();
 
   const [open, setOpen] = useState(false);
@@ -97,23 +96,22 @@ const UsersPage = () => {
 
   return (
     <div className="p-3">
-      <div className="flex justify-between items-center mb-5">
-        <h2 className="text-2xl font-bold">Users</h2>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-5">
+        <h2 className="text-2xl font-bold text-center sm:text-left">Users</h2>
 
-        <div className="w-2/3 flex items-center justify-center">
+        <div className="flex items-center justify-center gap-2 sm:w-2/4 w-full">
           <TextField
             label="Search"
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-[70%] "
+            className="w-full"
           />
-          <FormControl className="!m-1 !min-w-[120px]">
+          <FormControl className="!m-0 !min-w-[120px]">
             <Select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
               displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
             >
               <MenuItem value="all">All</MenuItem>
               <MenuItem value="manager">Manager</MenuItem>
@@ -123,14 +121,16 @@ const UsersPage = () => {
           </FormControl>
         </div>
 
-        <Button
-          variant="contained"
-          size="large"
-          onClick={handleAddOpen}
-        >
-          <Plus size={18} className="mr-2" />
-          Add User
-        </Button>
+        <div className="flex justify-center sm:justify-end w-full sm:w-auto">
+          <Button
+            variant="contained"
+            onClick={handleAddOpen}
+            className="!w-full sm:!w-auto"
+          >
+            <Plus size={18} className="mr-2" />
+            Add User
+          </Button>
+        </div>
       </div>
 
       <UsersTable
@@ -141,7 +141,7 @@ const UsersPage = () => {
       />
 
       <Dialog open={open} onClose={() => setOpen(false)} fullWidth>
-        <DialogTitle>{editId ? "Edit User" : "Add New User"} </DialogTitle>
+        <DialogTitle>{editId ? "Edit User" : "Add New User"}</DialogTitle>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogContent className="flex flex-col gap-4 mt-2">
@@ -194,10 +194,10 @@ const UsersPage = () => {
             />
           </DialogContent>
 
-          <DialogActions>
+          <DialogActions className="flex justify-between sm:justify-end">
             <Button onClick={() => setOpen(false)}>Cancel</Button>
             <Button variant="contained" type="submit">
-              Save
+              {editId ? "Update" : "Save"}
             </Button>
           </DialogActions>
         </form>

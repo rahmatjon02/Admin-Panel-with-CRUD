@@ -59,20 +59,14 @@
       "name": "Maria Garcia",
       "email": "maria@example.com",
       "role": "user"
-    },
-    {
-      "id": "0ea2",
-      "name": "salom",
-      "email": "tom@gmail.com",
-      "role": "user"
     }
   ],
   "products": [
     {
       "id": "1",
       "name": "Laptop",
-      "price": 999.99,
-      "inStock": true
+      "price": 29.99,
+      "inStock": false
     },
     {
       "id": "2",
@@ -126,6 +120,12 @@
       "id": "10",
       "name": "External Hard Drive",
       "price": 129.99,
+      "inStock": true
+    },
+    {
+      "id": "ab1f",
+      "name": "12121",
+      "price": "01212",
       "inStock": true
     }
   ]

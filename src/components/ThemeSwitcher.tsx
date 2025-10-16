@@ -5,10 +5,11 @@ import React from "react";
 
 const ThemeSwitcher = () => {
   const { theme, toggleTheme } = useThemeStore();
-  console.log("theme");
-
   return (
-    <Button className="!text-white" onClick={toggleTheme}>
+    <Button
+      className={`${theme === "dark" ? "!text-white" : "!text-black"}`}
+      onClick={toggleTheme}
+    >
       {theme === `light` ? <Sun /> : <Moon />}
       <span className="px-2">{theme === `light` ? "Dark" : "light"}</span>
     </Button>

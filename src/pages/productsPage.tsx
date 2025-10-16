@@ -35,7 +35,6 @@ const ProductsPage = () => {
   const addProduct = useAddProduct();
   const deleteProduct = useDeleteProduct();
   const updateProduct = useUpdateProduct();
-
   const { search, status, setSearch, setStatus } = useProductsFilterStore();
 
   const [open, setOpen] = useState(false);
@@ -52,11 +51,7 @@ const ProductsPage = () => {
   }, [data, search, status]);
 
   const { control, handleSubmit, reset } = useForm<FormValues>({
-    defaultValues: {
-      name: "",
-      price: 0,
-      inStock: true,
-    },
+    defaultValues: { name: "", price: 0, inStock: true },
   });
 
   const handleAddOpen = useCallback(() => {
@@ -112,23 +107,24 @@ const ProductsPage = () => {
 
   return (
     <div className="p-3">
-      <div className="flex justify-between items-center mb-5">
-        <h2 className="text-2xl font-bold">Products</h2>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-5">
+        <h2 className="text-2xl font-bold text-center sm:text-left">
+          Products
+        </h2>
 
-        <div className="w-2/3 flex items-center justify-center">
+        <div className="flex items-center justify-center gap-2 sm:w-2/4 w-full">
           <TextField
             label="Search"
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-[70%]"
+            className="w-full"
           />
-          <FormControl className="!m-1 !min-w-[120px]">
+          <FormControl className="!m-0 !min-w-[120px]">
             <Select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
               displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
             >
               <MenuItem value="all">All</MenuItem>
               <MenuItem value="true">In Stock</MenuItem>
@@ -137,13 +133,15 @@ const ProductsPage = () => {
           </FormControl>
         </div>
 
-        <Button
-          variant="contained"
-          size="large"
-          onClick={handleAddOpen}
-        >
-          <Plus size={18} className="mr-2" /> Add Product
-        </Button>
+        <div className="flex justify-center sm:justify-end w-full sm:w-auto">
+          <Button
+            variant="contained"
+            onClick={handleAddOpen}
+            className="!w-full sm:!w-auto"
+          >
+            <Plus size={18} className="mr-2" /> Add Product
+          </Button>
+        </div>
       </div>
 
       <ProductTable
@@ -209,7 +207,7 @@ const ProductsPage = () => {
             />
           </DialogContent>
 
-          <DialogActions>
+          <DialogActions className="flex justify-between sm:justify-end">
             <Button onClick={() => setOpen(false)}>Cancel</Button>
             <Button variant="contained" type="submit">
               {editId ? "Update" : "Save"}
