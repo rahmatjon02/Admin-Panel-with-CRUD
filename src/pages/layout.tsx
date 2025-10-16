@@ -24,7 +24,6 @@ const Layout = () => {
           }  text-white flex flex-col p-5 `}
         >
           <div>
-            <img src="../../public/admin.png" alt="" />
             <h1 className="text-xl font-bold mb-8 text-center">Admin Panel</h1>
           </div>
 
