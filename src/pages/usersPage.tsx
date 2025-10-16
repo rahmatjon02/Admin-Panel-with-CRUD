@@ -20,6 +20,7 @@ import {
 import type { User } from "../types/user";
 import { useUsersFilterStore } from "../hooks/zustand/useFiltersStore";
 import UsersTable from "../components/usersTable";
+import { Plus } from "lucide-react";
 
 type FormValues = Omit<User, "id">;
 
@@ -58,7 +59,7 @@ const UsersPage = () => {
     setOpen(true);
   };
 
-  const handleEditOpen = (user: any) => {
+  const handleEditOpen = (user: User) => {
     setEditId(user.id);
     reset({
       name: user.name,
@@ -122,7 +123,12 @@ const UsersPage = () => {
           </FormControl>
         </div>
 
-        <Button variant="contained" size="large" onClick={handleAddOpen}>
+        <Button
+          variant="contained"
+          size="large"
+          onClick={handleAddOpen}
+        >
+          <Plus size={18} className="mr-2" />
           Add User
         </Button>
       </div>

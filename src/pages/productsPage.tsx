@@ -141,7 +141,6 @@ const ProductsPage = () => {
           variant="contained"
           size="large"
           onClick={handleAddOpen}
-          className="!capitalize"
         >
           <Plus size={18} className="mr-2" /> Add Product
         </Button>

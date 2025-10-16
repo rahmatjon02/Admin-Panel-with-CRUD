@@ -43,14 +43,14 @@ const UsersTable = ({ filteredData, onEdit, onDelete, isLoading }: any) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {filteredData?.map((user: User) => (
-            <TableRow key={user.id} hover>
-              <TableCell>{user.id}</TableCell>
-              <TableCell>{user.name}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>{user.role}</TableCell>
+          {filteredData?.map((u: User) => (
+            <TableRow key={u.id} hover>
+              <TableCell>{u.id}</TableCell>
+              <TableCell>{u.name}</TableCell>
+              <TableCell>{u.email}</TableCell>
+              <TableCell>{u.role}</TableCell>
               <TableCell align="center">
-                <Button size="small" onClick={onEdit}>
+                <Button size="small" onClick={() => onEdit(u)}>
                   <Edit />
                 </Button>
                 <Button size="small" color="error" onClick={onDelete}>

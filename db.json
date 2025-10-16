@@ -59,6 +59,12 @@
       "name": "Maria Garcia",
       "email": "maria@example.com",
       "role": "user"
+    },
+    {
+      "id": "0ea2",
+      "name": "salom",
+      "email": "tom@gmail.com",
+      "role": "user"
     }
   ],
   "products": [
@@ -120,12 +126,6 @@
       "id": "10",
       "name": "External Hard Drive",
       "price": 129.99,
-      "inStock": true
-    },
-    {
-      "id": "a90f",
-      "name": "ывсыв",
-      "price": "111",
       "inStock": true
     }
   ]
