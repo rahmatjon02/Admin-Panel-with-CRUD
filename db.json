@@ -78,7 +78,7 @@
       "id": "3",
       "name": "Keyboard",
       "price": 79.99,
-      "inStock": true
+      "inStock": false
     },
     {
       "id": "4",
@@ -120,6 +120,12 @@
       "id": "10",
       "name": "External Hard Drive",
       "price": 129.99,
+      "inStock": true
+    },
+    {
+      "id": "a90f",
+      "name": "ывсыв",
+      "price": "111",
       "inStock": true
     }
   ]

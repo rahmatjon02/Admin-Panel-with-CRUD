@@ -6,21 +6,12 @@ import {
   DialogActions,
   Switch,
   FormControlLabel,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  TableContainer,
-  Paper,
-  TextField,
-  Box,
-  Skeleton,
   FormControl,
+  TextField,
   Select,
   MenuItem,
 } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   useProducts,
@@ -28,8 +19,10 @@ import {
   useDeleteProduct,
   useUpdateProduct,
 } from "../hooks/react-query/useProducts";
-import { useThemeStore } from "../hooks/zustand/useThemeStore";
 import { useProductsFilterStore } from "../hooks/zustand/useFiltersStore";
+import ProductTable from "../components/productTable";
+import type { Product } from "../types/product";
+import { Plus } from "lucide-react";
 
 type FormValues = {
   name: string;
@@ -37,12 +30,11 @@ type FormValues = {
   inStock: boolean;
 };
 
-export const ProductsPage = () => {
+const ProductsPage = () => {
   const { data, isLoading } = useProducts();
   const addProduct = useAddProduct();
   const deleteProduct = useDeleteProduct();
   const updateProduct = useUpdateProduct();
-  const { theme } = useThemeStore();
 
   const { search, status, setSearch, setStatus } = useProductsFilterStore();
 
@@ -67,43 +59,56 @@ export const ProductsPage = () => {
     },
   });
 
-  const handleAddOpen = () => {
+  const handleAddOpen = useCallback(() => {
     reset({ name: "", price: 0, inStock: true });
     setEditId(null);
     setOpen(true);
-  };
+  }, [reset]);
 
-  const handleEditOpen = (product: any) => {
-    setEditId(product.id);
-    reset({
-      name: product.name,
-      price: product.price,
-      inStock: product.inStock,
-    });
-    setOpen(true);
-  };
+  const handleEditOpen = useCallback(
+    (product: Product) => {
+      setEditId(product.id);
+      reset({
+        name: product.name,
+        price: product.price,
+        inStock: product.inStock,
+      });
+      setOpen(true);
+    },
+    [reset]
+  );
 
-  const onSubmit = (values: FormValues) => {
-    if (editId) {
-      updateProduct.mutate(
-        { id: editId, ...values },
-        {
+  const onSubmit = useCallback(
+    (values: FormValues) => {
+      if (editId) {
+        updateProduct.mutate(
+          { id: editId, ...values },
+          {
+            onSuccess: () => {
+              setOpen(false);
+              reset();
+              setEditId(null);
+            },
+          }
+        );
+      } else {
+        addProduct.mutate(values, {
           onSuccess: () => {
             setOpen(false);
             reset();
-            setEditId(null);
           },
-        }
-      );
-    } else {
-      addProduct.mutate(values, {
-        onSuccess: () => {
-          setOpen(false);
-          reset();
-        },
-      });
-    }
-  };
+        });
+      }
+    },
+    [editId, updateProduct, addProduct, reset]
+  );
+
+  const handleDelete = useCallback(
+    (id: number) => {
+      deleteProduct.mutate(id);
+    },
+    [deleteProduct]
+  );
 
   return (
     <div className="p-3">
@@ -125,93 +130,31 @@ export const ProductsPage = () => {
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}
             >
-              <MenuItem value="all">
-                <em>All</em>
-              </MenuItem>
+              <MenuItem value="all">All</MenuItem>
               <MenuItem value="true">In Stock</MenuItem>
               <MenuItem value="false">Out of Stock</MenuItem>
             </Select>
           </FormControl>
         </div>
 
-        <Button variant="contained" size="large" onClick={handleAddOpen}>
-          Add Product
+        <Button
+          variant="contained"
+          size="large"
+          onClick={handleAddOpen}
+          className="!capitalize"
+        >
+          <Plus size={18} className="mr-2" /> Add Product
         </Button>
       </div>
 
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead
-            className={`${theme === "light" ? "bg-[#f5f5f5]" : "bg-[#151515]"}`}
-          >
-            <TableRow>
-              <TableCell>
-                <b>ID</b>
-              </TableCell>
-              <TableCell>
-                <b>Name</b>
-              </TableCell>
-              <TableCell>
-                <b>Price</b>
-              </TableCell>
-              <TableCell>
-                <b>In Stock</b>
-              </TableCell>
-              <TableCell align="center">
-                <b>Actions</b>
-              </TableCell>
-            </TableRow>
-          </TableHead>
+      <ProductTable
+        filteredData={filteredData}
+        onEdit={handleEditOpen}
+        onDelete={handleDelete}
+        isLoading={isLoading}
+      />
 
-          <TableBody>
-            {filteredData?.map((p) => (
-              <TableRow key={p.id} hover>
-                <TableCell>{p.id}</TableCell>
-                <TableCell>{p.name}</TableCell>
-                <TableCell>${p.price}</TableCell>
-                <TableCell>
-                  {p.inStock ? (
-                    <span className="text-green-600 font-medium">Yes</span>
-                  ) : (
-                    <span className="text-red-600 font-medium">No</span>
-                  )}
-                </TableCell>
-                <TableCell align="center">
-                  <Button
-                    size="small"
-                    color="success"
-                    onClick={() => handleEditOpen(p)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    size="small"
-                    color="error"
-                    onClick={() => deleteProduct.mutate(p.id)}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-
-        {isLoading && (
-          <Box className="!w-full">
-            {[...Array(3)].map((_, i) => (
-              <Box key={i}>
-                <br />
-                <Skeleton />
-                <Skeleton animation="wave" />
-                <Skeleton animation={false} />
-              </Box>
-            ))}
-          </Box>
-        )}
-      </TableContainer>
-
-      <Dialog open={open} onClose={() => setOpen(false)}>
+      <Dialog open={open} onClose={() => setOpen(false)} fullWidth>
         <DialogTitle>{editId ? "Edit Product" : "Add New Product"}</DialogTitle>
 
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -261,7 +204,7 @@ export const ProductsPage = () => {
                       onChange={(e) => field.onChange(e.target.checked)}
                     />
                   }
-                  label="In Stock"
+                  label={`${field.value ? "In Stock" : "Out of Stock"}`}
                 />
               )}
             />
@@ -278,3 +221,5 @@ export const ProductsPage = () => {
     </div>
   );
 };
+
+export default ProductsPage;

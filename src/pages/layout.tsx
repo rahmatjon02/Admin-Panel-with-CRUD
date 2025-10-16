@@ -4,6 +4,7 @@ import { useThemeStore } from "../hooks/zustand/useThemeStore";
 import { lightTheme, darkTheme } from "../theme";
 import { useEffect } from "react";
 import ThemeSwitcher from "../components/ThemeSwitcher";
+import { Package, Users } from "lucide-react";
 
 const Layout = () => {
   const { pathname } = useLocation();
@@ -19,10 +20,13 @@ const Layout = () => {
       <div className="flex min-h-screen transition-colors">
         <aside
           className={`w-48 ${
-            theme === "light" ? "bg-sky-600" : "bg-sky-900"
+            theme === "light" ? "bg-sky-600" : "bg-[#02202B]"
           }  text-white flex flex-col p-5 `}
         >
-          <h1 className="text-2xl font-bold mb-8 text-center">Admin Panel</h1>
+          <div>
+            <img src="../../public/admin.png" alt="" />
+            <h1 className="text-xl font-bold mb-8 text-center">Admin Panel</h1>
+          </div>
 
           <nav className="flex flex-col justify-between gap-3 h-full">
             <div className="flex flex-col gap-2">
@@ -33,7 +37,7 @@ const Layout = () => {
                 className={`!justify-start !text-white !font-medium !rounded transition-all 
                 ${pathname === "/" ? "!bg-sky-800" : "hover:!bg-sky-700"}`}
               >
-                Products
+                <Package className="mr-3" /> Products
               </Button>
 
               <Button
@@ -43,7 +47,7 @@ const Layout = () => {
                 className={`!justify-start !text-white !font-medium !rounded transition-all 
                 ${pathname === "/users" ? "!bg-sky-800" : "hover:!bg-sky-700"}`}
               >
-                Users
+                <Users className="mr-3" /> Users
               </Button>
             </div>
 

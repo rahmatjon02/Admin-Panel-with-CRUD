@@ -3,20 +3,13 @@ import {
   TextField,
   Select,
   MenuItem,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
   FormControl,
 } from "@mui/material";
-import { useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   useUsers,
@@ -25,17 +18,16 @@ import {
   useUpdateUser,
 } from "../hooks/react-query/useUsers";
 import type { User } from "../types/user";
-import { useThemeStore } from "../hooks/zustand/useThemeStore";
 import { useUsersFilterStore } from "../hooks/zustand/useFiltersStore";
+import UsersTable from "../components/usersTable";
 
 type FormValues = Omit<User, "id">;
 
-export const UsersPage = () => {
+const UsersPage = () => {
   const { data, isLoading } = useUsers();
   const addUser = useAddUser();
   const updateUser = useUpdateUser();
   const deleteUser = useDeleteUser();
-  const { theme } = useThemeStore();
 
   const { search, setSearch, status, setStatus } = useUsersFilterStore();
 
@@ -98,7 +90,9 @@ export const UsersPage = () => {
     }
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  const handleDelete = (id: number) => {
+    deleteUser.mutate(id);
+  };
 
   return (
     <div className="p-3">
@@ -113,16 +107,14 @@ export const UsersPage = () => {
             onChange={(e) => setSearch(e.target.value)}
             className="w-[70%] "
           />
-          <FormControl sx={{ m: 1, minWidth: 120 }}>
+          <FormControl className="!m-1 !min-w-[120px]">
             <Select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}
             >
-              <MenuItem value="all">
-                <em>All</em>
-              </MenuItem>
+              <MenuItem value="all">All</MenuItem>
               <MenuItem value="manager">Manager</MenuItem>
               <MenuItem value="admin">Admin</MenuItem>
               <MenuItem value="user">User</MenuItem>
@@ -135,61 +127,14 @@ export const UsersPage = () => {
         </Button>
       </div>
 
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead
-            className={`${
-              theme === "light" ? "bg-[#f5f5f5]" : "bg-[#151515]"
-            } `}
-          >
-            <TableRow>
-              <TableCell>
-                <b>ID</b>
-              </TableCell>
-              <TableCell>
-                <b>Name</b>
-              </TableCell>
-              <TableCell>
-                <b>Email</b>
-              </TableCell>
-              <TableCell>
-                <b>Role</b>
-              </TableCell>
-              <TableCell align="center">
-                <b>Actions</b>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredData?.map((user) => (
-              <TableRow key={user.id} hover>
-                <TableCell>{user.id}</TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.role}</TableCell>
-                <TableCell align="center">
-                  <Button
-                    size="small"
-                    color="success"
-                    onClick={() => handleEditOpen(user)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    size="small"
-                    color="error"
-                    onClick={() => deleteUser.mutate(user.id)}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <UsersTable
+        filteredData={filteredData}
+        onEdit={handleEditOpen}
+        onDelete={handleDelete}
+        isLoading={isLoading}
+      />
 
-      <Dialog open={open} onClose={() => setOpen(false)}>
+      <Dialog open={open} onClose={() => setOpen(false)} fullWidth>
         <DialogTitle>{editId ? "Edit User" : "Add New User"} </DialogTitle>
 
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -254,3 +199,5 @@ export const UsersPage = () => {
     </div>
   );
 };
+
+export default memo(UsersPage);

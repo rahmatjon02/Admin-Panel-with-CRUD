@@ -1,8 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-
-import { UsersPage } from "./pages/usersPage";
-import Layout from "./pages/layout";
-import { ProductsPage } from "./pages/productsPage";
+import { Layout, ProductsPage, UsersPage } from "./pages/lazy";
 
 export const App = () => {
   return (
