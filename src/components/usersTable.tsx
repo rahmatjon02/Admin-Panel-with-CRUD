@@ -8,8 +8,6 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Box,
-  Skeleton,
   Dialog,
   DialogTitle,
   DialogContent,
