@@ -31,7 +31,7 @@ type FormValues = {
 };
 
 const ProductsPage = () => {
-  const { data, isLoading } = useProducts();
+  const { data, isLoading, isError } = useProducts();
   const addProduct = useAddProduct();
   const deleteProduct = useDeleteProduct();
   const updateProduct = useUpdateProduct();
@@ -149,6 +149,7 @@ const ProductsPage = () => {
         onEdit={handleEditOpen}
         onDelete={handleDelete}
         isLoading={isLoading}
+        isError={isError}
       />
 
       <Dialog open={open} onClose={() => setOpen(false)} fullWidth>

@@ -18,12 +18,15 @@ import {
 import { useThemeStore } from "../hooks/zustand/useThemeStore";
 import type { User } from "../types/user";
 import { Edit, Trash } from "lucide-react";
+import LoadingSkeleton from "./loadingSkeleton";
+import NetworkError from "./networkError";
 
 interface UserTableProps {
   filteredData: User[];
   onEdit: (user: User) => void;
   onDelete: (id: number) => void;
   isLoading: boolean;
+  isError: boolean;
 }
 
 const UsersTable = ({
@@ -31,6 +34,7 @@ const UsersTable = ({
   onEdit,
   onDelete,
   isLoading,
+  isError,
 }: UserTableProps) => {
   const { theme } = useThemeStore();
 
@@ -106,21 +110,24 @@ const UsersTable = ({
                 </TableCell>
               </TableRow>
             ))}
+
+            {isLoading && (
+              <TableRow>
+                <TableCell colSpan={5}>
+                  <LoadingSkeleton />
+                </TableCell>
+              </TableRow>
+            )}
+
+            {isError && (
+              <TableRow>
+                <TableCell colSpan={5}>
+                  <NetworkError />
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
-
-        {isLoading && (
-          <Box className="!w-full">
-            {[...Array(3)].map((_, i) => (
-              <Box key={i}>
-                <br />
-                <Skeleton />
-                <Skeleton animation="wave" />
-                <Skeleton animation={false} />
-              </Box>
-            ))}
-          </Box>
-        )}
       </TableContainer>
 
       <Dialog open={openDialog} onClose={handleCloseDialog}>

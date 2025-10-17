@@ -25,7 +25,7 @@ import { Plus } from "lucide-react";
 type FormValues = Omit<User, "id">;
 
 const UsersPage = () => {
-  const { data, isLoading } = useUsers();
+  const { data, isLoading, isError } = useUsers();
   const addUser = useAddUser();
   const updateUser = useUpdateUser();
   const deleteUser = useDeleteUser();
@@ -138,6 +138,7 @@ const UsersPage = () => {
         onEdit={handleEditOpen}
         onDelete={handleDelete}
         isLoading={isLoading}
+        isError={isError}
       />
 
       <Dialog open={open} onClose={() => setOpen(false)} fullWidth>

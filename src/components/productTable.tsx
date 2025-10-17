@@ -7,8 +7,6 @@ import {
   TableCell,
   TableContainer,
   Paper,
-  Box,
-  Skeleton,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -18,12 +16,15 @@ import { memo, useState } from "react";
 import { Edit, Trash } from "lucide-react";
 import { useThemeStore } from "../hooks/zustand/useThemeStore";
 import type { Product } from "../types/product";
+import LoadingSkeleton from "./loadingSkeleton";
+import NetworkError from "./networkError";
 
 interface ProductTableProps {
   filteredData: Product[];
   onEdit: (product: Product) => void;
   onDelete: (id: number) => void;
   isLoading: boolean;
+  isError: boolean;
 }
 
 const ProductTable = ({
@@ -31,6 +32,7 @@ const ProductTable = ({
   onEdit,
   onDelete,
   isLoading,
+  isError,
 }: ProductTableProps) => {
   const { theme } = useThemeStore();
 
@@ -117,15 +119,15 @@ const ProductTable = ({
             {isLoading && (
               <TableRow>
                 <TableCell colSpan={5}>
-                  <Box className="w-full p-4">
-                    {[...Array(3)].map((_, i) => (
-                      <Box key={i} mb={2}>
-                        <Skeleton height={30} />
-                        <Skeleton animation="wave" height={30} />
-                        <Skeleton animation={false} height={30} />
-                      </Box>
-                    ))}
-                  </Box>
+                  <LoadingSkeleton />
+                </TableCell>
+              </TableRow>
+            )}
+
+            {isError && (
+              <TableRow>
+                <TableCell colSpan={5}>
+                  <NetworkError />
                 </TableCell>
               </TableRow>
             )}
