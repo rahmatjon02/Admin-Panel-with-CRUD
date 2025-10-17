@@ -207,4 +207,4 @@ const UsersPage = () => {
   );
 };
 
-export default memo(UsersPage);
+export default UsersPage;
