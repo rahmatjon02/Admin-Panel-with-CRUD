@@ -8,7 +8,7 @@ import {
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useThemeStore } from "../hooks/zustand/useThemeStore";
 import { lightTheme, darkTheme } from "../theme";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import ThemeSwitcher from "../components/ThemeSwitcher";
 import { Package, Users, Menu } from "lucide-react";
 
@@ -16,11 +16,6 @@ const Layout = () => {
   const { pathname } = useLocation();
   const { theme } = useThemeStore();
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  useEffect(() => {
-    document.body.style.backgroundColor = theme === "dark" ? "#121212" : "#fff";
-    document.body.style.color = theme === "dark" ? "#fff" : "#000";
-  }, [theme]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
